@@ -38,7 +38,7 @@ export class TableHttpExample implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getRepoIssues(
+          return this.exampleDatabase!.getSessions(
               this.sort.active, this.sort.direction, this.paginator.pageIndex)
             .pipe(catchError(() => observableOf(null)));
         }),
@@ -75,7 +75,9 @@ export interface Session {
 export class ExampleHttpDatabase {
   constructor(private _httpClient: HttpClient) {}
 
-  getRepoIssues(sort: string, order: SortDirection, page: number): Observable<SessionApi> {
+  getSessions(sort: string, order: SortDirection, page: number): Observable<SessionApi> {
+    // console.log(`order: ${order}`);
+    // console.log(`sort: ${sort}`);
     const href = 'http://localhost:5000/sessions';
     const requestUrl =
         `${href}?size=2&page=${page + 1}`;
