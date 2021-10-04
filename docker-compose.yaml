@@ -11,14 +11,15 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./frontend/angularExample/e2e:/main/angularExample/e2e
       - ./frontend/angularExample/src:/main/angularExample/src
+      - ./frontend/angularExample/.browserslistrc:/main/angularExample/.browserslistrc
       - ./frontend/angularExample/.editorconfig:/main/angularExample/.editorconfig
+      - ./frontend/angularExample/.gitignore:/main/angularExample/.gitignore
       - ./frontend/angularExample/angular.json:/main/angularExample/angular.json
       - ./frontend/angularExample/package.json:/main/angularExample/package.json
-      - ./frontend/angularExample/package-lock.json:/main/angularExample/package-lock.json
+      - ./frontend/angularExample/tsconfig.app.json:/main/angularExample/tsconfig.app.json
       - ./frontend/angularExample/tsconfig.json:/main/angularExample/tsconfig.json
-      - ./frontend/angularExample/tslint.json:/main/angularExample/tslint.json
+      - ./frontend/angularExample/tsconfig.spec.json:/main/angularExample/tsconfig.spec.json
   backend:
     build:
       context: .
