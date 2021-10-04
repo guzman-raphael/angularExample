@@ -16,3 +16,7 @@ curl "http://localhost:5000/sessions?page=2&size=3"
 ```
 
 If providing no arguments, will return the full payload (`size=5`, `page=1`)
+
+# Interesting `mat-table` example for backend paging
+
+Section `Table retrieving data through HTTP` in https://material.angular.io/components/table/examples.
