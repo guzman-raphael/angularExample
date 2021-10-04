@@ -1,8 +1,11 @@
 from flask import Flask, request
-
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/sessions")
+@cross_origin()
 def hello_world():
     full_payload = [
         {
@@ -31,5 +34,6 @@ def hello_world():
 
     return {
         'results': full_payload[(page-1)*size:(page)*size],
+        'total_count': 5,
     }
     

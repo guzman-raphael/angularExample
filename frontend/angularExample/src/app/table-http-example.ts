@@ -14,9 +14,9 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
   templateUrl: 'table-http-example.html',
 })
 export class TableHttpExample implements AfterViewInit {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  displayedColumns: string[] = ['mouse_id', 'session_date'];
   exampleDatabase: ExampleHttpDatabase | null;
-  data: GithubIssue[] = [];
+  data: Session[] = [];
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -55,34 +55,32 @@ export class TableHttpExample implements AfterViewInit {
           // limit errors, we do not want to reset the paginator to zero, as that
           // would prevent users from re-triggering requests.
           this.resultsLength = data.total_count;
-          return data.items;
+          return data.results;
         })
       ).subscribe(data => this.data = data);
   }
 }
 
-export interface GithubApi {
-  items: GithubIssue[];
+export interface SessionApi {
+  results: Session[];
   total_count: number;
 }
 
-export interface GithubIssue {
-  created_at: string;
-  number: string;
-  state: string;
-  title: string;
+export interface Session {
+  mouse_id: number;
+  session_date: string;
 }
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDatabase {
   constructor(private _httpClient: HttpClient) {}
 
-  getRepoIssues(sort: string, order: SortDirection, page: number): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
+  getRepoIssues(sort: string, order: SortDirection, page: number): Observable<SessionApi> {
+    const href = 'http://localhost:5000/sessions';
     const requestUrl =
-        `${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${page + 1}`;
+        `${href}?size=2&page=${page + 1}`;
 
-    return this._httpClient.get<GithubApi>(requestUrl);
+    return this._httpClient.get<SessionApi>(requestUrl);
   }
 }
 
